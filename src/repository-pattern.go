@@ -42,12 +42,12 @@ type EmployeeRepository interface {
 
 // BaseRepository ...
 type BaseRepository struct {
-	con *sql.DB
+	db *sql.DB
 }
 
 // GetEmployees ...
 func (repo *BaseRepository) GetEmployees() ([]*Employee, error) {
-	defer repo.con.Close()
+	defer repo.db.Close()
 
 	query, _, err := sq.Select("id, name, city").From("employee").OrderBy("id desc").ToSql()
 
@@ -55,7 +55,7 @@ func (repo *BaseRepository) GetEmployees() ([]*Employee, error) {
 		return nil, err
 	}
 
-	rows, err := repo.con.Query(query)
+	rows, err := repo.db.Query(query)
 
 	if err != nil {
 		return nil, err
