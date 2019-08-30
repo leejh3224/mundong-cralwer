@@ -36,7 +36,7 @@ func NewDB() (*sql.DB, error) {
 }
 
 // EmployeeRepository ...
-type EmployeeRepository interface {
+type IEmployeeRepository interface {
 	GetEmployees() ([]*Employee, error)
 }
 
@@ -45,15 +45,15 @@ type Repository struct {
 	db *sql.DB
 }
 
-type EmployeeService interface {
+type IEmployeeService interface {
 	GetEmployeesExcept(names []string) ([]*Employee, error)
 }
 
-type Service struct {
-	repo EmployeeRepository
+type EmployeeService struct {
+	repo IEmployeeRepository
 }
 
-func (service *Service) GetEmployeesExcept(names []string) ([]*Employee, error) {
+func (service *EmployeeService) GetEmployeesExcept(names []string) ([]*Employee, error) {
 	employees, err := service.repo.GetEmployees()
 
 	if err != nil {
