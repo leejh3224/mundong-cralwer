@@ -3,10 +3,12 @@ module /Users/gompro/personal/cralwer
 go 1.12
 
 require (
+	github.com/Masterminds/squirrel v1.1.0
 	github.com/PuerkitoBio/goquery v1.5.0 // indirect
 	github.com/antchfx/htmlquery v1.0.0 // indirect
 	github.com/antchfx/xmlquery v1.0.0 // indirect
 	github.com/antchfx/xpath v1.0.0 // indirect
+	github.com/go-sql-driver/mysql v1.4.1
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/gocolly/colly v1.2.0
 	github.com/gogo/protobuf v1.2.1 // indirect
