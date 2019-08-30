@@ -52,5 +52,21 @@ func main() {
 		fmt.Println(book)
 	}
 
-	fmt.Println(len(books))
+	db, err := NewDB()
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	var repo EmployeeRepository = &BaseRepository{con: db}
+
+	employees, err := repo.GetEmployees()
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	for _, employee := range employees {
+		fmt.Println(employee)
+	}
 }
