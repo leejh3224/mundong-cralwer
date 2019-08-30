@@ -58,9 +58,10 @@ func main() {
 		panic(err.Error())
 	}
 
-	var repo EmployeeRepository = &BaseRepository{con: db}
+	var employeeRepo EmployeeRepository = &Repository{db: db}
+	var service EmployeeService = &Service{repo: employeeRepo}
 
-	employees, err := repo.GetEmployees()
+	employees, err := service.GetEmployeesExcept([]string{"john"})
 
 	if err != nil {
 		panic(err.Error())

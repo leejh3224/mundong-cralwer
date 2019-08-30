@@ -41,12 +41,40 @@ type EmployeeRepository interface {
 }
 
 // BaseRepository ...
-type BaseRepository struct {
+type Repository struct {
 	db *sql.DB
 }
 
+type EmployeeService interface {
+	GetEmployeesExcept(names []string) ([]*Employee, error)
+}
+
+type Service struct {
+	repo EmployeeRepository
+}
+
+func (service *Service) GetEmployeesExcept(names []string) ([]*Employee, error) {
+	employees, err := service.repo.GetEmployees()
+
+	if err != nil {
+		return nil, err
+	}
+
+	filtered := make([]*Employee, 0)
+
+	for _, employee := range employees {
+		for _, name := range names {
+			if name != employee.Name {
+				filtered = append(filtered, employee)
+			}
+		}
+	}
+
+	return filtered, nil
+}
+
 // GetEmployees ...
-func (repo *BaseRepository) GetEmployees() ([]*Employee, error) {
+func (repo *Repository) GetEmployees() ([]*Employee, error) {
 	defer repo.db.Close()
 
 	query, _, err := sq.Select("id, name, city").From("employee").OrderBy("id desc").ToSql()
