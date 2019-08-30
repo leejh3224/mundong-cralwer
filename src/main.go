@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 	"unicode/utf8"
 
 	"github.com/gocolly/colly"
@@ -14,7 +16,7 @@ type Book struct {
 	Category    string
 	Publisher   string
 	PublishedAt string
-	Price       string
+	Price       uint32
 	Img         string
 }
 
@@ -24,8 +26,9 @@ func main() {
 	books := make([]Book, 0, 50)
 
 	c.OnHTML(".list_type_01 > li", func(e *colly.HTMLElement) {
-		priceString := e.ChildText(".info dd:nth-of-type(6)")
-		price := priceString[:utf8.RuneCountInString(priceString)-1]
+		price := e.ChildText(".info dd:nth-of-type(6)")
+		price = strings.Replace(price[:utf8.RuneCountInString(price)-1], ",", "", -1)
+		numPrice, _ := strconv.Atoi(price)
 
 		book := Book{
 			Title:       e.ChildText(".info dd:nth-of-type(1)"),
@@ -33,7 +36,7 @@ func main() {
 			Category:    e.ChildText(".info dd:nth-of-type(3)"),
 			Publisher:   e.ChildText(".info dd:nth-of-type(4)"),
 			PublishedAt: e.ChildText(".info dd:nth-of-type(5)"),
-			Price:       price,
+			Price:       uint32(numPrice),
 			Img:         e.ChildAttr("img", "src"),
 		}
 
