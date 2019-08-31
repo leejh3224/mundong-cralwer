@@ -70,4 +70,6 @@ func main() {
 	for _, employee := range employees {
 		fmt.Println(employee)
 	}
+
+	fmt.Println(len(employees))
 }

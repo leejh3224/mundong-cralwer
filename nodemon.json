@@ -1,0 +1,7 @@
+{
+    "exec": "go run src/*.go",
+    "ext": "go",
+    "watch": [
+        "src/*.go"
+    ]
+}
